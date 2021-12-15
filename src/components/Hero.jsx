@@ -1,8 +1,10 @@
 import Buy from "./Buy";
 
-const Hero = () => {
+const Hero = ({collection}) => {
     return (
-        <Buy />
+        <div className="buyContainer">
+            <Buy collection={collection} />
+        </div>
     )
 }
 

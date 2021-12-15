@@ -2,14 +2,25 @@
   text-align: center;
 }
 
+.tl{
+  text-align: left;
+}
+
+.overflow-wrap{
+  overflow-wrap: anywhere;
+}
+
 .App-logo {
-  height: 40vmin;
+  height: 20vmin;
+  width: 20vmin !important;
   pointer-events: none;
+  max-width: 150px;
+  max-height: 150px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+  .logo-spin {
+    animation: App-logo-spin infinite 1s linear;
   }
 }
 
