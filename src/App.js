@@ -76,9 +76,9 @@ class App extends Component {
       ? true
       : false;
 
-  convertToNetworkId = (network) => (network == "mainnet" ? 1 : 4);
+  convertToNetworkId = (network) => (network === "mainnet" ? 1 : 4);
 
-  checkIfEnvDev = () => !(process.env.REACT_APP_IS_PRODUCTION == "true");
+  checkIfEnvDev = () => !(process.env.REACT_APP_IS_PRODUCTION === "true");
 
   render = () => {
     const { collection, connectedAddress, network, isLoading } = this.state;

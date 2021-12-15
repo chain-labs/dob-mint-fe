@@ -177,7 +177,7 @@ const SaleActiveComponent = ({
   const [value, setValue] = useState(0);
   const [isBuying, setIsBuying] = useState(false);
 
-  const handpleInputChange = (e) => {
+  const handleInputChange = (e) => {
     setValue(e.target.value);
   };
 
@@ -185,7 +185,7 @@ const SaleActiveComponent = ({
     setIsBuying(true);
     const tx = await buy(value).send({
       from: connectedAddress,
-      value: new Web3.utils.BN(publicPrice).mul(new Web3.utils.BN(value)),
+      value: new Web3.utils.toBN(publicPrice).mul(new Web3.utils.toBN(value)),
     });
     console.log(tx);
     if (tx?.transactionHash) {
@@ -204,7 +204,7 @@ const SaleActiveComponent = ({
               Tokens to mint
             </InputGroup.Text>
             <FormControl
-              onChange={handpleInputChange}
+              onChange={handleInputChange}
               value={value}
               aria-label="Default"
               aria-describedby="inputGroup-sizing-default"
@@ -215,12 +215,12 @@ const SaleActiveComponent = ({
           Maximum tokens that can be minted per transaction: {maxPurchase || 0}
         </Card.Text>
         <Card.Text>
-          Mint price per token: {Web3.utils.BN(publicPrice) || 0} ETH
+          Mint price per token: {Web3.utils.toBN(publicPrice) || 0} ETH
         </Card.Text>
         <Card.Text>
           Total Cost:{" "}
           {Web3.utils.fromWei(
-            new Web3.utils.BN(publicPrice).mul(new Web3.utils.BN(value))
+            new Web3.utils.toBN(publicPrice).mul(new Web3.utils.toBN(value))
           ) || 0}{" "}
           ETH
         </Card.Text>
@@ -249,7 +249,7 @@ const PresaleActiveComponent = ({
     setIsBuying(true);
     const tx = await presaleBuy(value).send({
       from: connectedAddress,
-      value: new Web3.utils.BN(presalePrice).mul(new Web3.utils.BN(value)),
+      value: new Web3.utils.toBN(presalePrice).mul(new Web3.utils.toBN(value)),
     });
     console.log(tx);
     if (tx?.transactionHash) {
@@ -284,7 +284,7 @@ const PresaleActiveComponent = ({
         <Card.Text>
           Total Cost:{" "}
           {Web3.utils.fromWei(
-            new Web3.utils.BN(presalePrice).mul(new Web3.utils.BN(value))
+            new Web3.utils.toBN(presalePrice).mul(new Web3.utils.toBN(value))
           ) || 0}{" "}
           ETH
         </Card.Text>
