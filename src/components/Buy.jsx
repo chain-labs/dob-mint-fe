@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import { Card, Button, InputGroup, FormControl } from "react-bootstrap";
 import { useTimer } from "react-timer-hook";
 import Web3 from "web3";
+import { differenceInSeconds } from 'date-fns';
 
 // states for buying
-const WaitingForPresale = Symbol("waiting for presale");
-const PresaleActive = Symbol("presale active");
-const WaitingForSale = Symbol("waiting for sale");
-const SaleActive = Symbol("sale active");
-const SaleEnded = Symbol("sale ended");
+export const WaitingForPresale = Symbol("waiting for presale");
+export const WaitingForSale = Symbol("waiting for sale");
+export const PresaleActive = Symbol("presale active");
+export const SaleActive = Symbol("sale active");
+export const SaleEnded = Symbol("sale ended");
 
 
 
@@ -23,18 +24,19 @@ const SaleEndedComponent = () => {
   );
 };
 
-const WaitingForPresaleComponent = ({ seconds, minutes, hours, days }) => {
-  return (
+const WaitingComponent = ({ status, setStatus, time }) => {
+
+  const saleText = status === WaitingForPresale ? "Presale" : "Sale"
+    return (
     <Card className="text-center">
       <Card.Body>
         <Card.Title>Mint DoB</Card.Title>
         <Card.Text>
-          Presale starts in{" "}
-          <Timer
-            seconds={seconds}
-            minutes={minutes}
-            hours={hours}
-            days={days}
+           {saleText} starts in{" "}
+          <CountdownTimer
+            status={status}
+            setStatus={setStatus}
+            deadline={time}
           />
         </Card.Text>
       </Card.Body>
@@ -42,18 +44,17 @@ const WaitingForPresaleComponent = ({ seconds, minutes, hours, days }) => {
   );
 };
 
-const WaitingForSaleComponent = ({ seconds, minutes, hours, days }) => {
+const WaitingForSaleComponent = ({ status, setStatus, time  }) => {
   return (
     <Card className="text-center">
       <Card.Body>
         <Card.Title>Mint DoB</Card.Title>
         <Card.Text>
           Sale starts in{" "}
-          <Timer
-            seconds={seconds}
-            minutes={minutes}
-            hours={hours}
-            days={days}
+          <CountdownTimer
+            status={status}
+            setStatus={setStatus}
+            deadline={time}
           />
         </Card.Text>
       </Card.Body>
@@ -189,31 +190,14 @@ const PresaleActiveComponent = ({
   );
 };
 
-const Timer = ({ seconds, minutes, hours, days }) => {
-  return (
-    <>
-      <span>{days}</span>:<span>{hours}</span>:<span>{minutes}</span>:
-      <span>{seconds}</span>
-    </>
-  );
-};
+
+
+// Edit this Component to change timer
+
 
 const Buy = ({ collection }) => {
   const [state, setState] = useState();
   const [expiryTimestamp, setExpiryTimestamp] = useState(Date.now());
-
-  const nextState = (state) => {
-    if (state === WaitingForSale) {
-      setState(SaleActive);
-    } else if (state === WaitingForPresale) {
-      setState(PresaleActive);
-    }
-  };
-
-  const { seconds, minutes, hours, days } = useTimer({
-    expiryTimestamp: expiryTimestamp,
-    onExpire: () => nextState(state),
-  });
 
   useEffect(() => {
     figureOutState();
@@ -261,11 +245,10 @@ const Buy = ({ collection }) => {
     console.log(state);
     if (state === WaitingForPresale) {
       return (
-        <WaitingForPresaleComponent
-          seconds={seconds}
-          minutes={minutes}
-          hours={hours}
-          days={days}
+        <WaitingComponent
+          status={state}
+          setStatus={setState}
+          time={expiryTimestamp}
         />
       );
     }
@@ -281,11 +264,10 @@ const Buy = ({ collection }) => {
     }
     if (state === WaitingForSale) {
       return (
-        <WaitingForSaleComponent
-          seconds={seconds}
-          minutes={minutes}
-          hours={hours}
-          days={days}
+        <WaitingComponent
+          status={state}
+          setStatus={setState}
+          time={expiryTimestamp}
         />
       );
     }
