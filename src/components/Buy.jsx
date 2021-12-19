@@ -6,6 +6,8 @@ import { differenceInSeconds } from "date-fns";
 import CountdownTimer from "./Buy/CountdownTimer";
 import Logo from "../assets/logo2.png";
 import ModalBox from "./ModalBox";
+// import SaleActiveComponent from "./Buy/ActiveSale";
+// import WaitingComponent from "./Buy/WaitingComponent";
 
 // states for buying
 export const WaitingForPresale = Symbol("waiting for presale");
@@ -13,7 +15,7 @@ export const WaitingForSale = Symbol("waiting for sale");
 export const PresaleActive = Symbol("presale active");
 export const SaleActive = Symbol("sale active");
 export const SaleEnded = Symbol("sale ended");
-export const showModal = Symbol("true")
+export const showModal = Symbol("true");
 
 const SaleEndedComponent = () => {
 	return (
@@ -71,6 +73,7 @@ const SaleActiveComponent = ({
 }) => {
 	const [value, setValue] = useState(0);
 	const [isBuying, setIsBuying] = useState(false);
+	const [showModal, setShowModal] = useState(false);
 
 	const handpleInputChange = (e) => {
 		setValue(e.target.value);
@@ -85,7 +88,7 @@ const SaleActiveComponent = ({
 		console.log(tx);
 		if (tx?.transactionHash) {
 			setIsBuying(false);
-      
+			setShowModal(true);
 		}
 	};
 
@@ -121,7 +124,9 @@ const SaleActiveComponent = ({
 				style={{
 					backgroundColor: "transparent",
 					color: "white",
-					border: "1px solid grey",
+					border: "3px solid white",
+          fontFamily:"satoshi",
+          fontSize:"1rem"
 				}}
 			>
 				<Card.Body>
@@ -129,13 +134,9 @@ const SaleActiveComponent = ({
 					<hr />
 					{/* <Card.Text>Sale is Active</Card.Text> */}
 					<Card.Text>
-						Maximum tokens that can be minted per transaction:{" "}
-						{maxPurchase || 0}
-					</Card.Text>
-					<Card.Text>
 						<div style={{ display: "flex", justifyContent: "space-between" }}>
 							<div>Price Per Token</div>
-							<div>{Web3.utils.fromWei(salePrice.toString()) || 0} ETH</div>
+							<div style={{fontWeight:"bold",fontSize:"1.1rem"}}>{Web3.utils.fromWei(salePrice.toString()) || 0} ETH</div>
 						</div>
 					</Card.Text>
 					<Card.Text>
@@ -143,7 +144,7 @@ const SaleActiveComponent = ({
 							<InputGroup.Text
 								id="inputGroup-sizing-default"
 								style={{ backgroundColor: "#8757b2", color: "white" }}
-							>
+                >
 								Tokens to mint
 							</InputGroup.Text>
 							<FormControl
@@ -152,13 +153,17 @@ const SaleActiveComponent = ({
 								aria-label="Default"
 								aria-describedby="inputGroup-sizing-default"
 								style={{ backgroundColor: "black", color: "white" }}
-							/>
+                />
 						</InputGroup>
 					</Card.Text>
+                <Card.Text>
+                  NOTE: <span style={{color:"green"}}>*Maximum tokens that can be minted per transaction:{" "}
+                  {maxPurchase || 0}</span>
+                </Card.Text>
 					<Card.Text>
 						<div style={{ display: "flex", justifyContent: "space-between" }}>
 							<div>Total Cost</div>
-							<div>
+							<div style={{fontWeight:"bold",fontSize:"1.1rem"}}>
 								{Web3.utils.fromWei(
 									new Web3.utils.toBN(salePrice).mul(new Web3.utils.toBN(value))
 								) || 0}{" "}
@@ -177,6 +182,7 @@ const SaleActiveComponent = ({
 					</Button>
 				</Card.Body>
 			</Card>
+			<ModalBox show={showModal} onHide={()=>{setShowModal(false)}}/>
 		</div>
 	);
 };
@@ -189,6 +195,7 @@ const PresaleActiveComponent = ({
 }) => {
 	const [value, setValue] = useState(0);
 	const [isBuying, setIsBuying] = useState(false);
+	const [showModal, setShowModal] = useState(false);
 
 	const handpleInputChange = (e) => {
 		setValue(e.target.value);
@@ -203,55 +210,62 @@ const PresaleActiveComponent = ({
 		console.log(tx);
 		if (tx?.transactionHash) {
 			setIsBuying(false);
+			setShowModal(true);
 		}
 	};
 
 	return (
-		<Card className="text-center">
-			<Card.Body>
-				<Card.Title>Mint DoB</Card.Title>
-				<hr />
-				{/* <Card.Text>Presale Sale is Active</Card.Text> */}
-				<Card.Text>
-					<InputGroup className="mb-3">
-						<InputGroup.Text id="inputGroup-sizing-default">
-							Tokens to mint
-						</InputGroup.Text>
-						<FormControl
-							onChange={handpleInputChange}
-							value={value}
-							aria-label="Default"
-							aria-describedby="inputGroup-sizing-default"
-						/>
-					</InputGroup>
-				</Card.Text>
-				<Card.Text>
-					<div></div>
-					Maximum tokens that can be minted per transaction: {maxPurchase || 0}
-				</Card.Text>
-				<Card.Text>
-					<div style={{ display: "flex", justifyContent: "space-between" }}>
-						<div>Price Per Token</div>
-						<div>{Web3.utils.fromWei(presalePrice) || 0} ETH ETH</div>
-					</div>
-				</Card.Text>
-        <Card.Text>
+		<div>
+			<Card className="text-center" style={{fontFamily:"satoshi"}}>
+				<Card.Body>
+					<Card.Title>Mint DoB</Card.Title>
+					<hr />
+					{/* <Card.Text>Presale Sale is Active</Card.Text> */}
+					<Card.Text>
+						<InputGroup className="mb-3">
+							<InputGroup.Text id="inputGroup-sizing-default">
+								Tokens to mint
+							</InputGroup.Text>
+							<FormControl
+								onChange={handpleInputChange}
+								value={value}
+								aria-label="Default"
+								aria-describedby="inputGroup-sizing-default"
+							/>
+						</InputGroup>
+					</Card.Text>
+					<Card.Text>
+						<div></div>
+						Maximum tokens that can be minted per transaction:{" "}
+						{maxPurchase || 0}
+					</Card.Text>
+					<Card.Text>
+						<div style={{ display: "flex", justifyContent: "space-between" }}>
+							<div>Price Per Token</div>
+							<div>{Web3.utils.fromWei(presalePrice) || 0} ETH ETH</div>
+						</div>
+					</Card.Text>
+					<Card.Text>
 						<div style={{ display: "flex", justifyContent: "space-between" }}>
 							<div>Total Cost</div>
 							<div>
-              {Web3.utils.fromWei(
-						new Web3.utils.toBN(presalePrice).mul(new Web3.utils.toBN(value))
-					) || 0}{" "}
-					ETH
+								{Web3.utils.fromWei(
+									new Web3.utils.toBN(presalePrice).mul(
+										new Web3.utils.toBN(value)
+									)
+								) || 0}{" "}
+								ETH
 							</div>
 						</div>
 					</Card.Text>
-          <hr/>
-				<Button onClick={handlePresaleBuy} variant="primary">
-					{isBuying ? "Minting..." : "Mint"}
-				</Button>
-			</Card.Body>
-		</Card>
+					<hr />
+					<Button onClick={handlePresaleBuy} variant="primary">
+						{isBuying ? "Minting..." : "Mint"}
+					</Button>
+				</Card.Body>
+			</Card>
+			<ModalBox show={showModal} onHide={()=>{setShowModal(false)}}/>
+		</div>
 	);
 };
 
@@ -333,18 +347,17 @@ const Buy = ({ collection }) => {
 				/>
 			);
 		}
-    
-		if (state === SaleActive) {
-			return (<div>
 
-				<SaleActiveComponent
-					maxPurchase={collection?.token?.maxPurchase}
-					salePrice={collection?.token?.publicPrice}
-					buy={collection.contract.methods["buy(uint256)"]}
-					connectedAddress={collection?.user?.address}
-				/>
-        <ModalBox show={true}/>
-      </div>
+		if (state === SaleActive) {
+			return (
+				<div>
+					<SaleActiveComponent
+						maxPurchase={collection?.token?.maxPurchase}
+						salePrice={collection?.token?.publicPrice}
+						buy={collection.contract.methods["buy(uint256)"]}
+						connectedAddress={collection?.user?.address}
+					/>
+				</div>
 			);
 		}
 		if (state === SaleEnded) {
