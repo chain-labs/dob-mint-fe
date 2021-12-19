@@ -5,6 +5,7 @@ import Web3 from "web3";
 import { differenceInSeconds } from "date-fns";
 import CountdownTimer from "./Buy/CountdownTimer";
 import Logo from "../assets/logo2.png";
+import ModalBox from "./ModalBox";
 
 // states for buying
 export const WaitingForPresale = Symbol("waiting for presale");
@@ -12,6 +13,7 @@ export const WaitingForSale = Symbol("waiting for sale");
 export const PresaleActive = Symbol("presale active");
 export const SaleActive = Symbol("sale active");
 export const SaleEnded = Symbol("sale ended");
+export const showModal = Symbol("true")
 
 const SaleEndedComponent = () => {
 	return (
@@ -83,6 +85,7 @@ const SaleActiveComponent = ({
 		console.log(tx);
 		if (tx?.transactionHash) {
 			setIsBuying(false);
+      
 		}
 	};
 
@@ -330,14 +333,18 @@ const Buy = ({ collection }) => {
 				/>
 			);
 		}
+    
 		if (state === SaleActive) {
-			return (
+			return (<div>
+
 				<SaleActiveComponent
 					maxPurchase={collection?.token?.maxPurchase}
 					salePrice={collection?.token?.publicPrice}
 					buy={collection.contract.methods["buy(uint256)"]}
 					connectedAddress={collection?.user?.address}
 				/>
+        <ModalBox show={true}/>
+      </div>
 			);
 		}
 		if (state === SaleEnded) {

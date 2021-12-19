@@ -4,6 +4,7 @@ import "../style/style.scss";
 import { Button } from "react-bootstrap";
 import Nav from "./Nav";
 import Logo from "../assets/logo2.png";
+import Modal from "./ModalBox";
 
 const Hero = ({ collection }) => {
 	return (
@@ -22,7 +23,9 @@ const Hero = ({ collection }) => {
 						src={Logo}
 						alt="no"
 					></img>
-					<div style={{width:"100%",display:"flex",justifyContent:"center"}} >
+					<div
+						style={{ width: "100%", display: "flex", justifyContent: "center" }}
+					>
 						<Buy collection={collection} />
 					</div>
 				</div>
