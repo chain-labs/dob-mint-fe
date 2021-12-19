@@ -5,6 +5,8 @@ import Web3 from "web3";
 import { differenceInSeconds } from "date-fns";
 import CountdownTimer from "./Buy/CountdownTimer";
 import Logo from "../assets/logo2.png";
+import SaleActiveComponent from "./Buy/ActiveSale";
+import WaitingComponent from "./Buy/WaitingComponent";
 
 // states for buying
 export const WaitingForPresale = Symbol("waiting for presale");
@@ -300,52 +302,54 @@ const Buy = ({ collection }) => {
 		setState(SaleEnded);
 	};
 
-	const renderAccordingToState = (state) => {
-		console.log(state);
-		if (state === WaitingForPresale) {
-			return (
-				<WaitingComponent
-					status={state}
-					setStatus={setState}
-					time={expiryTimestamp}
-				/>
-			);
-		}
-		if (state === PresaleActive) {
-			return (
-				<PresaleActiveComponent
-					maxPurchase={collection?.token?.maxPurchase}
-					presalePrice={collection?.token?.presalePrice}
-					presaleBuy={collection.contract.methods["presaleBuy(uint256)"]}
-					connectedAddress={collection?.user?.address}
-				/>
-			);
-		}
-		if (state === WaitingForSale) {
-			return (
-				<WaitingComponent
-					status={state}
-					setStatus={setState}
-					time={expiryTimestamp}
-				/>
-			);
-		}
-		if (state === SaleActive) {
-			return (
-				<SaleActiveComponent
-					maxPurchase={collection?.token?.maxPurchase}
-					salePrice={collection?.token?.publicPrice}
-					buy={collection.contract.methods["buy(uint256)"]}
-					connectedAddress={collection?.user?.address}
-				/>
-			);
-		}
-		if (state === SaleEnded) {
-			return <SaleEndedComponent />;
-		}
-	};
+  const renderAccordingToState = (state) => {
+    console.log(state);
+    if (state === WaitingForPresale) {
+      return (
+        <WaitingComponent
+          status={state}
+          setStatus={setState}
+          time={expiryTimestamp}
+        />
+      );
+    }
+    if (state === PresaleActive) {
+      return (
+        <SaleActiveComponent
+          maxPurchase={collection?.token?.maxPurchase}
+          price={collection?.token?.presalePrice}
+          buy={collection.contract.methods["presaleBuy(uint256)"]}
+          connectedAddress={collection?.user?.address}
+          state="Presale"
+        />
+      );
+    }
+    if (state === WaitingForSale) {
+      return (
+        <WaitingComponent
+          status={state}
+          setStatus={setState}
+          time={expiryTimestamp}
+        />
+      );
+    }
+    if (state === SaleActive) {
+      return (
+        <SaleActiveComponent
+          maxPurchase={collection?.token?.maxPurchase}
+          price={collection?.token?.publicPrice}
+          buy={collection.contract.methods["buy(uint256)"]}
+          connectedAddress={collection?.user?.address}
+          state="Sale"
+        />
+      );
+    }
+    if (state === SaleEnded) {
+      return <SaleEndedComponent />;
+    }
+  };
 
 	return state ? renderAccordingToState(state) : <div>Loading...</div>;
 };
 
-export default Buy;
+  export default Buy;
