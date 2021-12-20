@@ -65,7 +65,7 @@ const CountdownTimer = ({
     }, [counter]);
   
     return (
-      <Card.Text>{countdown}</Card.Text>
+      <Card.Text style={{color:"green",fontSize:"2.5rem",fontFamily:"Satoshi"}}>{countdown}</Card.Text>
     );
 };
 

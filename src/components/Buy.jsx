@@ -19,10 +19,23 @@ export const showModal = Symbol("true");
 
 const SaleEndedComponent = () => {
 	return (
-		<Card className="text-center">
+		<Card
+			className="text-center"
+			style={{
+				backgroundColor: "transparent",
+				color: "white",
+				border: "3px solid white",
+				fontFamily: "Satoshi",
+				fontSize: "1rem",
+			}}
+		>
 			<Card.Body>
 				<Card.Title>Mint DoB</Card.Title>
-				<Card.Text>Sale have Ended</Card.Text>
+				<hr />
+				<h1>OOPS!</h1>
+				<Card.Text>
+					<div style={{ fontSize: "2rem",fontFamily:"Satoshi",color:"red" }}>We are Sorry! Sale have Ended</div>
+				</Card.Text>
 			</Card.Body>
 		</Card>
 	);
@@ -31,9 +44,20 @@ const SaleEndedComponent = () => {
 const WaitingComponent = ({ status, setStatus, time }) => {
 	const saleText = status === WaitingForPresale ? "Presale" : "Sale";
 	return (
-		<Card className="text-center">
+		<Card
+			className="text-center"
+			style={{
+				backgroundColor: "transparent",
+				color: "white",
+				border: "3px solid white",
+				fontFamily: "Satoshi",
+				fontSize: "1rem",
+			}}
+		>
+			{" "}
 			<Card.Body>
 				<Card.Title>Mint DoB</Card.Title>
+				<hr />
 				<Card.Text>
 					{saleText} starts in{" "}
 					<CountdownTimer
@@ -49,7 +73,16 @@ const WaitingComponent = ({ status, setStatus, time }) => {
 
 const WaitingForSaleComponent = ({ status, setStatus, time }) => {
 	return (
-		<Card className="text-center">
+		<Card
+			className="text-center"
+			style={{
+				backgroundColor: "transparent",
+				color: "white",
+				border: "3px solid white",
+				fontFamily: "Satoshi",
+				fontSize: "1rem",
+			}}
+		>
 			<Card.Body>
 				<Card.Title>Mint DoB</Card.Title>
 				<Card.Text>
@@ -93,50 +126,26 @@ const SaleActiveComponent = ({
 	};
 
 	return (
-		<div
-			style={{
-				display: "flex",
-				justifyContent: "center",
-				flexDirection: "column",
-				alignItems: "center",
-			}}
-		>
-			{/* <div
-				style={{
-					borderRadius: "100%",
-					backgroundColor: "#8757b2",
-					width: "110px",
-					height: "110px",
-					display: "flex",
-					justifyContent: "center",
-          alignItems:"center",
-          color:"white",
-					position: "relative",
-					top: "45px",
-					border: "none",
-          zIndex:"1"
-				}}
-			>
-        <h1>DOB</h1>
-      </div> */}
+		<div className="buyCard">
 			<Card
 				className="text-center"
 				style={{
 					backgroundColor: "transparent",
 					color: "white",
 					border: "3px solid white",
-          fontFamily:"satoshi",
-          fontSize:"1rem"
+					fontFamily: "Satoshi",
+					fontSize: "1rem",
 				}}
 			>
 				<Card.Body>
 					<Card.Title>Mint DoB</Card.Title>
 					<hr />
-					{/* <Card.Text>Sale is Active</Card.Text> */}
 					<Card.Text>
 						<div style={{ display: "flex", justifyContent: "space-between" }}>
 							<div>Price Per Token</div>
-							<div style={{fontWeight:"bold",fontSize:"1.1rem"}}>{Web3.utils.fromWei(salePrice.toString()) || 0} ETH</div>
+							<div style={{ fontWeight: "bold", fontSize: "1.1rem" }}>
+								{Web3.utils.fromWei(salePrice.toString()) || 0} ETH
+							</div>
 						</div>
 					</Card.Text>
 					<Card.Text>
@@ -144,7 +153,7 @@ const SaleActiveComponent = ({
 							<InputGroup.Text
 								id="inputGroup-sizing-default"
 								style={{ backgroundColor: "#8757b2", color: "white" }}
-                >
+							>
 								Tokens to mint
 							</InputGroup.Text>
 							<FormControl
@@ -153,17 +162,20 @@ const SaleActiveComponent = ({
 								aria-label="Default"
 								aria-describedby="inputGroup-sizing-default"
 								style={{ backgroundColor: "black", color: "white" }}
-                />
+							/>
 						</InputGroup>
 					</Card.Text>
-                <Card.Text>
-                  NOTE: <span style={{color:"green"}}>*Maximum tokens that can be minted per transaction:{" "}
-                  {maxPurchase || 0}</span>
-                </Card.Text>
+					<Card.Text>
+						NOTE:{" "}
+						<span style={{ color: "green" }}>
+							*Maximum tokens that can be minted per transaction:{" "}
+							{maxPurchase || 0}
+						</span>
+					</Card.Text>
 					<Card.Text>
 						<div style={{ display: "flex", justifyContent: "space-between" }}>
 							<div>Total Cost</div>
-							<div style={{fontWeight:"bold",fontSize:"1.1rem"}}>
+							<div style={{ fontWeight: "bold", fontSize: "1.1rem" }}>
 								{Web3.utils.fromWei(
 									new Web3.utils.toBN(salePrice).mul(new Web3.utils.toBN(value))
 								) || 0}{" "}
@@ -182,7 +194,12 @@ const SaleActiveComponent = ({
 					</Button>
 				</Card.Body>
 			</Card>
-			<ModalBox show={showModal} onHide={()=>{setShowModal(false)}}/>
+			<ModalBox
+				show={showModal}
+				onHide={() => {
+					setShowModal(false);
+				}}
+			/>
 		</div>
 	);
 };
@@ -216,14 +233,33 @@ const PresaleActiveComponent = ({
 
 	return (
 		<div>
-			<Card className="text-center" style={{fontFamily:"satoshi"}}>
+			<Card
+				className="text-center"
+				style={{
+					backgroundColor: "transparent",
+					color: "white",
+					border: "3px solid white",
+					fontFamily: "Satoshi",
+					fontSize: "1rem",
+				}}
+			>
 				<Card.Body>
 					<Card.Title>Mint DoB</Card.Title>
 					<hr />
-					{/* <Card.Text>Presale Sale is Active</Card.Text> */}
+					<Card.Text>
+						<div style={{ display: "flex", justifyContent: "space-between" }}>
+							<div>Price Per Token</div>
+							<div style={{ fontWeight: "bold", fontSize: "1.1rem" }}>
+								{Web3.utils.fromWei(presalePrice) || 0} ETH
+							</div>
+						</div>
+					</Card.Text>
 					<Card.Text>
 						<InputGroup className="mb-3">
-							<InputGroup.Text id="inputGroup-sizing-default">
+							<InputGroup.Text
+								id="inputGroup-sizing-default"
+								style={{ backgroundColor: "#8757b2", color: "white" }}
+							>
 								Tokens to mint
 							</InputGroup.Text>
 							<FormControl
@@ -231,24 +267,21 @@ const PresaleActiveComponent = ({
 								value={value}
 								aria-label="Default"
 								aria-describedby="inputGroup-sizing-default"
+								style={{ backgroundColor: "black", color: "white" }}
 							/>
 						</InputGroup>
 					</Card.Text>
 					<Card.Text>
-						<div></div>
-						Maximum tokens that can be minted per transaction:{" "}
-						{maxPurchase || 0}
-					</Card.Text>
-					<Card.Text>
-						<div style={{ display: "flex", justifyContent: "space-between" }}>
-							<div>Price Per Token</div>
-							<div>{Web3.utils.fromWei(presalePrice) || 0} ETH ETH</div>
-						</div>
+						NOTE:{" "}
+						<span style={{ color: "green" }}>
+							*Maximum tokens that can be minted per transaction:{" "}
+							{maxPurchase || 0}
+						</span>
 					</Card.Text>
 					<Card.Text>
 						<div style={{ display: "flex", justifyContent: "space-between" }}>
 							<div>Total Cost</div>
-							<div>
+							<div style={{ fontWeight: "bold", fontSize: "1.1rem" }}>
 								{Web3.utils.fromWei(
 									new Web3.utils.toBN(presalePrice).mul(
 										new Web3.utils.toBN(value)
@@ -259,12 +292,21 @@ const PresaleActiveComponent = ({
 						</div>
 					</Card.Text>
 					<hr />
-					<Button onClick={handlePresaleBuy} variant="primary">
+					<Button
+						onClick={handlePresaleBuy}
+						variant="primary"
+						style={{ width: "100%" }}
+					>
 						{isBuying ? "Minting..." : "Mint"}
 					</Button>
 				</Card.Body>
 			</Card>
-			<ModalBox show={showModal} onHide={()=>{setShowModal(false)}}/>
+			<ModalBox
+				show={showModal}
+				onHide={() => {
+					setShowModal(false);
+				}}
+			/>
 		</div>
 	);
 };
@@ -321,11 +363,12 @@ const Buy = ({ collection }) => {
 		console.log(state);
 		if (state === WaitingForPresale) {
 			return (
-				<WaitingComponent
-					status={state}
-					setStatus={setState}
-					time={expiryTimestamp}
-				/>
+				// <WaitingComponent
+				// 	status={state}
+				// 	setStatus={setState}
+				// 	time={expiryTimestamp}
+				// />
+				<div></div>
 			);
 		}
 		if (state === PresaleActive) {
@@ -351,12 +394,24 @@ const Buy = ({ collection }) => {
 		if (state === SaleActive) {
 			return (
 				<div>
-					<SaleActiveComponent
+					{/* <SaleActiveComponent
 						maxPurchase={collection?.token?.maxPurchase}
 						salePrice={collection?.token?.publicPrice}
 						buy={collection.contract.methods["buy(uint256)"]}
 						connectedAddress={collection?.user?.address}
-					/>
+					/> */}
+					{/* <WaitingComponent
+						status={state}
+						setStatus={setState}
+						time={expiryTimestamp}
+					/> */}
+					{/* <PresaleActiveComponent
+						maxPurchase={collection?.token?.maxPurchase}
+						presalePrice={collection?.token?.presalePrice}
+						presaleBuy={collection.contract.methods["presaleBuy(uint256)"]}
+						connectedAddress={collection?.user?.address}
+					/> */}
+					<SaleEndedComponent />
 				</div>
 			);
 		}
