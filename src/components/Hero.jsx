@@ -4,10 +4,10 @@ import "../style/style.scss";
 import Nav from "./Nav";
 import Logo from "../assets/logo2.png";
 
-const Hero = ({ collection }) => {
+const Hero = ({ collection, connectedAddress, network }) => {
 	return (
 		<div className="buyContainer">
-			<Nav></Nav>
+			<Nav connectedAddress={connectedAddress} network={network} />
 			<div className="mainSection">
 				<img className="mainImg" src={Img} alt="no"/>
 				<div>

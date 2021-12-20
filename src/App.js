@@ -1,12 +1,10 @@
 import { Component } from "react";
 import "./App.css";
-import Nav from "./components/Nav";
 import Hero from "./components/Hero";
 import getWeb3 from "./getWeb3";
 import Collection from "./entity/Collection";
 import Loading from "./containers/Loading";
 import "bootstrap/dist/css/bootstrap.min.css";
-
 
 class App extends Component {
   constructor() {
@@ -73,7 +71,7 @@ class App extends Component {
   };
 
   checkNetwork = async (web3, network) =>
-    (await web3.eth.net.getId()) == this.convertToNetworkId(network)
+    (await web3.eth.net.getId()) === this.convertToNetworkId(network)
       ? true
       : false;
 
@@ -85,8 +83,7 @@ class App extends Component {
     const { collection, connectedAddress, network, isLoading } = this.state;
     return !isLoading ? (
       <div className="App">
-        {/* <Nav connectedAddress={connectedAddress} network={network} /> */}
-        <Hero collection={collection} />
+        <Hero collection={collection} connectedAddress={connectedAddress} network={network} />
       </div>
     ) : (
       <Loading message={"Daughters of Blockchain are getting ready..."} />
