@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import { Card, Button, InputGroup, FormControl } from "react-bootstrap";
-import Web3 from "web3";
-import ModalBox from "./ModalBox";
+import { Card } from "react-bootstrap";
 import WaitingComponent from "./Buy/WaitingComponent";
 import SaleActiveComponent from "./Buy/ActiveSale";
 
@@ -38,12 +36,32 @@ const SaleEndedComponent = () => {
 };
 
 const Buy = ({ collection }) => {
-	const [state, setState] = useState();
+  const [state, setState] = useState();
 	const [expiryTimestamp, setExpiryTimestamp] = useState(Date.now());
-
+  
+  
 	useEffect(() => {
+    const figureOutState = () => {
+      if (collection?.isPresaleAllowed) {
+        if (toJSTimestamp(collection?.presaleStartTime) > Date.now()) {
+          setState(WaitingForPresale);
+          return;
+        } else if (collection?.isPresaleActive) {
+          setState(PresaleActive);
+          return;
+        }
+      }
+      if (toJSTimestamp(collection?.publicSaleStartTime) > Date.now()) {
+        setState(WaitingForSale);
+        return;
+      } else if (collection?.isSaleActive) {
+        setState(SaleActive);
+        return;
+      }
+      setState(SaleEnded);
+    };
 		figureOutState();
-	}, []);
+	}, [collection]);
 
 	useEffect(() => {
 		if (state === WaitingForPresale) {
@@ -59,29 +77,10 @@ const Buy = ({ collection }) => {
 		} else {
 			setExpiryTimestamp(0);
 		}
-	}, [state]);
+	}, [state, collection]);
 
 	const toJSTimestamp = (timestamp) => parseInt(timestamp) * 1000;
 
-	const figureOutState = () => {
-		if (collection?.isPresaleAllowed) {
-			if (toJSTimestamp(collection?.presaleStartTime) > Date.now()) {
-				setState(WaitingForPresale);
-				return;
-			} else if (collection?.isPresaleActive) {
-				setState(PresaleActive);
-				return;
-			}
-		}
-		if (toJSTimestamp(collection?.publicSaleStartTime) > Date.now()) {
-			setState(WaitingForSale);
-			return;
-		} else if (collection?.isSaleActive) {
-			setState(SaleActive);
-			return;
-		}
-		setState(SaleEnded);
-	};
 
 	const renderAccordingToState = (state) => {
 		console.log(state);

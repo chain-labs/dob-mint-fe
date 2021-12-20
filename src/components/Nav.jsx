@@ -1,4 +1,3 @@
-import { Navbar } from "react-bootstrap";
 import "../style/style.scss"
 
 const Nav = ({connectedAddress, network}) => {
