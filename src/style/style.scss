@@ -7,7 +7,7 @@
 		// width:"100%";
 		color: white;
 		padding: 20px 100px;
-		font-family: Satoshi;
+		font-family: 'Satoshi', sans-serif;
 		font-size: 1.5rem;
 		display: flex;
 		justify-content: space-between;
@@ -15,6 +15,12 @@
 			text-decoration: none;
 			font-size: 1rem;
 			color: #564182;
+			&:hover {
+				color: white;
+			}
+			&:visited {
+				color: none;
+			}
 			cursor: pointer;
 			z-index: 1;
 		}

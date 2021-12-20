@@ -1,71 +1,126 @@
-import Button from "@restart/ui/esm/Button";
 import { useState } from "react";
-import { Card, FormControl, InputGroup } from "react-bootstrap";
+import { Card, FormControl, InputGroup, Button } from "react-bootstrap";
 import Web3 from "web3";
+import ModalBox from "../ModalBox";
 
 const SaleActiveComponent = ({
-    maxPurchase,
-    price,
-    buy,
+	maxPurchase,
+	salePrice,
+	buy,
     connectedAddress,
-    state
-  }) => {
-    const [value, setValue] = useState(0);
-    const [isBuying, setIsBuying] = useState(false);
-  
-    const handpleInputChange = (e) => {
-      setValue(e.target.value);
-    };
-  
-    const handleBuy = async () => {
-      setIsBuying(true);
-      const tx = await buy(value).send({
-        from: connectedAddress,
-        value: new Web3.utils.toBN(price).mul(new Web3.utils.toBN(value)),
-      });
-      console.log(tx);
-      if (tx?.transactionHash) {
-        setIsBuying(false);
-      }
-    };
-  
-    return (
-      <Card className="text-center">
-        <Card.Body>
-          <Card.Title>Mint DoB</Card.Title>
-          <Card.Text>{state} is Active</Card.Text>
-          <Card.Text>
-            <InputGroup className="mb-3">
-              <InputGroup.Text id="inputGroup-sizing-default">
-                Tokens to mint
-              </InputGroup.Text>
-              <FormControl
-                onChange={handpleInputChange}
-                value={value}
-                aria-label="Default"
-                aria-describedby="inputGroup-sizing-default"
-              />
-            </InputGroup>
-          </Card.Text>
-          <Card.Text>
-            Maximum tokens that can be minted per transaction: {maxPurchase || 0}
-          </Card.Text>
-          <Card.Text>
-            Mint price per token: {Web3.utils?.fromWei(price?.toString()) || 0} ETH
-          </Card.Text>
-          <Card.Text>
-            Total Cost:{" "}
-            {Web3.utils?.fromWei(
-              new Web3.utils.toBN(price).mul(new Web3.utils.toBN(value))
-            ) || 0}{" "}
-            ETH
-          </Card.Text>
-          <Button onClick={handleBuy} variant="primary">
-            {isBuying ? "Minting..." : "Mint"}
-          </Button>
-        </Card.Body>
-      </Card>
-    );
+    presale
+}) => {
+	const [value, setValue] = useState(1);
+	const [isBuying, setIsBuying] = useState(false);
+	const [showModal, setShowModal] = useState(false);
+
+	const handpleInputChange = (e) => {
+		setValue(e.target.value);
+	};
+
+	const handleSaleBuy = async () => {
+        setIsBuying(true);
+        try {
+            const tx = await buy(value).send({
+                from: connectedAddress,
+                value: new Web3.utils.toBN(salePrice).mul(new Web3.utils.toBN(value)),
+            });
+            console.log(tx);
+            if (tx?.transactionHash) {
+                setIsBuying(false);
+                setShowModal(true);
+            } else {
+                setIsBuying(false)
+                alert("Something Went Wrong..Try Again!")
+            }
+        } catch (err) {
+            alert("Something Went Wrong..Try Again!")
+            setIsBuying(false);
+        }
+	};
+
+	return (
+		<div className="buyCard">
+			<Card
+				className="text-center"
+				style={{
+					backgroundColor: "transparent",
+					color: "white",
+                    border: "3px solid white",
+                    borderRadius: "8px",
+					fontFamily: "Satoshi",
+					fontSize: "1rem",
+				}}
+			>
+				<Card.Body>
+					<Card.Title>Mint a Daughter of Blockchain {presale ? "(Presale)" : ""}</Card.Title>
+					<hr />
+					<Card.Text>
+						<div style={{ display: "flex", justifyContent: "space-between" }}>
+							<div>Price Per Token</div>
+							<div style={{ fontWeight: "bold", fontSize: "1.1rem" }}>
+								{Web3.utils.fromWei(salePrice.toString()) || 0} ETH
+							</div>
+						</div>
+					</Card.Text>
+					<Card.Text>
+						<InputGroup className="mb-3">
+							<InputGroup.Text
+								id="inputGroup-sizing-default"
+								style={{ backgroundColor: "#8757b2", color: "white" }}
+							>
+								Tokens to mint
+							</InputGroup.Text>
+							<FormControl
+								onChange={handpleInputChange}
+                                value={value}
+                                type="number"
+                                max={maxPurchase}
+                                min={1}
+								aria-label="Default"
+								aria-describedby="inputGroup-sizing-default"
+								style={{ backgroundColor: "black", color: "white" }}
+							/>
+						</InputGroup>
+					</Card.Text>
+					<Card.Text>
+						(
+						<span style={{ color: "green", fontWeight: "600" }}>
+							Maximum {maxPurchase || 0} tokens can be minted per transaction
+                        </span>
+                        )
+					</Card.Text>
+					<Card.Text>
+						<div style={{ display: "flex", justifyContent: "space-between" }}>
+							<div>Total Cost</div>
+							<div style={{ fontWeight: "bold", fontSize: "1.1rem" }}>
+								{Web3.utils.fromWei(
+									new Web3.utils.toBN(salePrice).mul(new Web3.utils.toBN(value))
+								) || 0}{" "}
+								ETH
+							</div>
+						</div>
+					</Card.Text>
+					<hr />
+
+					<Button
+						onClick={handleSaleBuy}
+						variant="primary"
+                        style={{ width: "100%" }}
+                        disabled={(value > maxPurchase || value < 1) ? true : false}
+					>
+						{isBuying ? "Minting..." : "Mint"}
+					</Button>
+				</Card.Body>
+			</Card>
+			<ModalBox
+				show={showModal}
+				onHide={() => {
+				    setShowModal(false);
+				}}
+			/>
+		</div>
+	);
 };
   
 export default SaleActiveComponent;
