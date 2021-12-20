@@ -1,12 +1,34 @@
 import Buy from "./Buy";
+import Img from "../assets/Christmas.png";
+import "../style/style.scss";
+import Nav from "./Nav";
+import Logo from "../assets/logo2.png";
 
-const Hero = ({collection}) => {
-    return (
-        <div className="buyContainer" style={{ border: "1px solid black"}}>
-            <Buy collection={collection} />
-            {/* <h1>Hero</h1> */}
-        </div>
-    )
-}
+const Hero = ({ collection }) => {
+	return (
+		<div className="buyContainer">
+			<Nav></Nav>
+			<div className="mainSection">
+				<img className="mainImg" src={Img} alt="no"/>
+				<div>
+					<img
+						style={{
+							width: "40vw",
+							marginTop: "100px",
+							marginBottom: "20px",
+						}}
+						src={Logo}
+						alt="no"
+					></img>
+					<div
+						style={{ width: "100%", display: "flex", justifyContent: "center" }}
+					>
+						<Buy collection={collection} />
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+};
 
 export default Hero;

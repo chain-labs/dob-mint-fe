@@ -62,10 +62,10 @@ const CountdownTimer = ({
         setCounter(counter - 1);
       }, 1000);
       return () => clearInterval(interval);
-    }, [counter,  setStatus, status]);
+    }, [counter, status, setStatus]);
   
     return (
-      <Card.Text>{countdown}</Card.Text>
+      <Card.Text style={{color:"green",fontSize:"2.5rem",fontFamily:"Satoshi"}}>{countdown}</Card.Text>
     );
 };
 

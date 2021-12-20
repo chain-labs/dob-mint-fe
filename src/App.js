@@ -4,8 +4,9 @@ import Nav from "./components/Nav";
 import Hero from "./components/Hero";
 import getWeb3 from "./getWeb3";
 import Collection from "./entity/Collection";
-import "bootstrap/dist/css/bootstrap.min.css";
 import Loading from "./containers/Loading";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 
 class App extends Component {
   constructor() {
@@ -84,7 +85,7 @@ class App extends Component {
     const { collection, connectedAddress, network, isLoading } = this.state;
     return !isLoading ? (
       <div className="App">
-        <Nav connectedAddress={connectedAddress} network={network} />
+        {/* <Nav connectedAddress={connectedAddress} network={network} /> */}
         <Hero collection={collection} />
       </div>
     ) : (
