@@ -43,7 +43,7 @@ class App extends Component {
           this.setState({ isLoading: false });
           clearInterval(loadingInterval);
         }
-      }, 100);
+      }, 1000);
 
       const accounts = await this.web3.eth.getAccounts();
       this.setState({

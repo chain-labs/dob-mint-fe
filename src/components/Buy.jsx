@@ -28,7 +28,7 @@ const SaleEndedComponent = () => {
 				<hr />
 				<h1>OOPS!</h1>
 				<Card.Text>
-					<div style={{ fontSize: "2rem",fontFamily:"Satoshi",color:"red" }}>We are Sorry! Sale have Ended</div>
+					<div style={{ fontSize: "2rem",fontFamily:"Satoshi",color:"red" }}>We are Sorry! Sale has Ended</div>
 				</Card.Text>
 			</Card.Body>
 		</Card>
@@ -58,9 +58,11 @@ const Buy = ({ collection }) => {
         setState(SaleActive);
         return;
       }
-      setState(SaleEnded);
+		setState(SaleEnded);
+		
+		
     };
-		figureOutState();
+	figureOutState();
 	}, [collection]);
 
 	useEffect(() => {
