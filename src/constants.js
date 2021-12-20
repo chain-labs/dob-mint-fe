@@ -27,8 +27,6 @@ export const checkNetwork = async (web3, network) => {
     const id = await web3.eth.net.getId();
     const reqdId = convertToNetworkId(network);
 
-    console.log({id, reqdId});
-
    return (id) === reqdId
       ? true
       : false;
