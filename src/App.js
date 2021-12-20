@@ -5,6 +5,7 @@ import getWeb3 from "./getWeb3";
 import Collection from "./entity/Collection";
 import Loading from "./containers/Loading";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { checkNetwork } from "./constants";
 
 class App extends Component {
   constructor() {
@@ -23,7 +24,7 @@ class App extends Component {
     const { network, collectionAddress } = this.getEnvVar();
     try {
       this.web3 = await getWeb3();
-      const correctNetwork = await this.checkNetwork(this.web3, network);
+      const correctNetwork = await checkNetwork(this.web3, network);
       window.ethereum.on("chainChanged", () => window.location.reload());
       if (!correctNetwork) {
         this.setState({ wrongNetwork: true });
@@ -69,13 +70,6 @@ class App extends Component {
       collectionAddress: process.env.REACT_APP_CONTRACT_ADDRESS,
     };
   };
-
-  checkNetwork = async (web3, network) =>
-    (await web3.eth.net.getId()) === this.convertToNetworkId(network)
-      ? true
-      : false;
-
-  convertToNetworkId = (network) => (network === "mainnet" ? 1 : 4);
 
   checkIfEnvDev = () => !(process.env.REACT_APP_IS_PRODUCTION === "true");
 
