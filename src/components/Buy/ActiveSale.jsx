@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Card, FormControl, InputGroup, Button } from "react-bootstrap";
 import Web3 from "web3";
+import { getUnit } from "../../constants";
 import ModalBox from "../ModalBox";
 
 const SaleActiveComponent = ({
@@ -16,7 +17,9 @@ const SaleActiveComponent = ({
 
 	const handpleInputChange = (e) => {
 		setValue(e.target.value);
-	};
+    };
+    
+    const unit = getUnit();
 
 	const handleSaleBuy = async () => {
         setIsBuying(true);
@@ -59,7 +62,7 @@ const SaleActiveComponent = ({
 						<div style={{ display: "flex", justifyContent: "space-between" }}>
 							<div>Price Per Token</div>
 							<div style={{ fontWeight: "bold", fontSize: "1.1rem" }}>
-								{Web3.utils.fromWei(salePrice.toString()) || 0} ETH
+								{Web3.utils.fromWei(salePrice.toString()) || 0} {unit}
 							</div>
 						</div>
 					</Card.Text>
@@ -97,7 +100,7 @@ const SaleActiveComponent = ({
 								{Web3.utils.fromWei(
 									new Web3.utils.toBN(salePrice).mul(new Web3.utils.toBN(value))
 								) || 0}{" "}
-								ETH
+								{unit}
 							</div>
 						</div>
 					</Card.Text>
