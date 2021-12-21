@@ -80,7 +80,7 @@ class App extends Component {
         <Hero collection={collection} connectedAddress={connectedAddress} network={network} />
       </div>
     ) : (
-      <Loading message={"Daughters of Blockchain are getting ready..."} />
+      <Loading message={"Please select Polygon Matic as a network and connect your wallet"} />
     );
   };
 }
