@@ -16,7 +16,7 @@ const Loading = ({ message }) => (
 					https://daughtersofblockchain.com/get-matic/
 				</a>
 			</div>
-		</h3>
+		</h3> 
 	</header>
 );
 
