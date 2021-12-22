@@ -4,7 +4,7 @@ import { WaitingForPresale } from '../Buy';
 import CountdownTimer from './CountdownTimer';
 
 const WaitingComponent = ({ status, setStatus, time }) => {
-	const saleText = status === WaitingForPresale ? "Presale" : "Sale";
+	const saleText = status === WaitingForPresale ? "Christmas Sale" : "Sale";
 	return (
 		<Card
 			className="text-center"

@@ -56,7 +56,7 @@ const SaleActiveComponent = ({
 				}}
 			>
 				<Card.Body>
-					<Card.Title>Mint a Daughter of Blockchain {presale ? "(Presale)" : ""}</Card.Title>
+					<Card.Title>Mint a Daughter of Blockchain {presale ? "(Christmas Sale)" : ""}</Card.Title>
 					<hr />
 					<Card.Text>
 						<div style={{ display: "flex", justifyContent: "space-between" }}>
