@@ -17,7 +17,9 @@ const SaleActiveComponent = ({
 
 	const handpleInputChange = (e) => {
 		setValue(e.target.value);
-    };
+	};
+	
+	console.log({maxPurchase});
     
     const unit = getUnit();
 
@@ -105,12 +107,11 @@ const SaleActiveComponent = ({
 						</div>
 					</Card.Text>
 					<hr />
-
 					<Button
 						onClick={handleSaleBuy}
 						variant="primary"
                         style={{ width: "100%" }}
-                        disabled={(value > maxPurchase || value < 1) ? true : false}
+                        disabled={(value > parseInt(maxPurchase) || value < 1) ? true : false}
 					>
 						{isBuying ? "Minting..." : "Mint"}
 					</Button>
