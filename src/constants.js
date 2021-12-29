@@ -41,4 +41,4 @@ export const getUnit = () => {
     return networkUnits[network];
 };
 
-export const GA_TRACKING_ID = "UA-216039877-1";
+export const GA_TRACKING_ID = process.env.REACT_APP_GA_TRACKING_ID;

@@ -8,9 +8,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { checkNetwork, GA_TRACKING_ID } from "./constants";
 import ReactGA from 'react-ga';
 
-ReactGA.initialize(GA_TRACKING_ID, {
-  debug: true
-});
+
+if (!window.location.hostname.includes("localhost")) {
+  ReactGA.initialize(GA_TRACKING_ID, {debug: true});
+}
 
 
 class App extends Component {
@@ -29,7 +30,7 @@ class App extends Component {
 
 
   componentDidMount = async () => {
-    ReactGA.pageview(window.location.pathname + window.location.search);
+    ReactGA.pageview("Loading...");
     const { network, collectionAddress } = this.getEnvVar();
     try {
       this.web3 = await getWeb3();

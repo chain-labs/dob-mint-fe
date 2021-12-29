@@ -5,7 +5,9 @@ import { GA_TRACKING_ID, getUnit } from "../../constants";
 import ModalBox from "../ModalBox";
 import ReactGA from 'react-ga';
 
-ReactGA.initialize(GA_TRACKING_ID, { debug: true });
+if (!window.location.hostname.includes("localhost")) {
+	ReactGA.initialize(GA_TRACKING_ID, {debug: true});
+}
 
 const SaleActiveComponent = ({
 	maxPurchase,
@@ -27,7 +29,7 @@ const SaleActiveComponent = ({
     const unit = getUnit();
 
 	const handleSaleBuy = async () => {
-		ReactGA.event({ category: presale ? "Christmas Sale" : "Sale", action: "Buy", label: "Button" });
+		ReactGA.event({ category: presale ? "Christmas Sale" : "Sale", action: "Buy", label: "Button Click" });
         setIsBuying(true);
         try {
             const tx = await buy(value).send({
@@ -38,11 +40,13 @@ const SaleActiveComponent = ({
             if (tx?.transactionHash) {
                 setIsBuying(false);
 				setShowModal(true);
-            } else {
-                setIsBuying(false)
+			} else {
+				setIsBuying(false)
                 alert("Something Went Wrong..Try Again!")
+				ReactGA.event({ category: presale ? "Christmas Sale" : "Sale", action: "Buy Failed", label: "ERROR ALERT" });
             }
-        } catch (err) {
+		} catch (err) {
+			ReactGA.event({ category: presale ? "Christmas Sale" : "Sale", action: "Buy Failed", label: "ERROR ALERT" });
             alert("Something Went Wrong..Try Again!")
             setIsBuying(false);
         }
