@@ -5,7 +5,7 @@ import SaleActiveComponent from "./Buy/ActiveSale";
 import ReactGA from 'react-ga';
 import { GA_TRACKING_ID } from "../constants";
 
-if (window.location.hostname.includes("localhost")) {
+if (!window.location.hostname.includes("localhost")) {
 	ReactGA.initialize(GA_TRACKING_ID);
 }
 
