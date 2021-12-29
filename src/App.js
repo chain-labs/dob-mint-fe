@@ -5,7 +5,12 @@ import getWeb3 from "./getWeb3";
 import Collection from "./entity/Collection";
 import Loading from "./containers/Loading";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { checkNetwork } from "./constants";
+import { checkNetwork, GA_TRACKING_ID } from "./constants";
+import ReactGA from 'react-ga4';
+
+ReactGA.initialize(GA_TRACKING_ID);
+
+
 
 class App extends Component {
   constructor() {
@@ -20,7 +25,14 @@ class App extends Component {
     };
   }
 
+
+
   componentDidMount = async () => {
+    // if (!window.location.hostname.includes("localhost")) {
+    if (true) {
+      ReactGA.initialize(GA_TRACKING_ID);
+    }
+    ReactGA.send({ hitType: "pageview", page: "/loading" });
     const { network, collectionAddress } = this.getEnvVar();
     try {
       this.web3 = await getWeb3();

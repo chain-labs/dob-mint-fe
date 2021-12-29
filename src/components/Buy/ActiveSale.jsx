@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, FormControl, InputGroup, Button } from "react-bootstrap";
 import Web3 from "web3";
-import { getUnit } from "../../constants";
+import { GA_TRACKING_ID, getUnit } from "../../constants";
 import ModalBox from "../ModalBox";
+import ReactGA from 'react-ga4';
+
+
 
 const SaleActiveComponent = ({
 	maxPurchase,
@@ -15,6 +18,10 @@ const SaleActiveComponent = ({
 	const [isBuying, setIsBuying] = useState(false);
 	const [showModal, setShowModal] = useState(false);
 
+	useEffect(() => {
+		ReactGA.initialize(GA_TRACKING_ID);
+	}, []);
+
 	const handpleInputChange = (e) => {
 		setValue(e.target.value);
 	};
@@ -24,6 +31,7 @@ const SaleActiveComponent = ({
     const unit = getUnit();
 
 	const handleSaleBuy = async () => {
+		ReactGA.event({ category: presale ? "Christmas Sale" : "Sale", action: "Buy", label: "Button Click" });
         setIsBuying(true);
         try {
             const tx = await buy(value).send({
@@ -33,12 +41,14 @@ const SaleActiveComponent = ({
             console.log(tx);
             if (tx?.transactionHash) {
                 setIsBuying(false);
-                setShowModal(true);
-            } else {
-                setIsBuying(false)
+				setShowModal(true);
+			} else {
+				setIsBuying(false)
                 alert("Something Went Wrong..Try Again!")
+				ReactGA.event({ category: presale ? "Christmas Sale" : "Sale", action: "Buy Failed", label: "ERROR ALERT" });
             }
-        } catch (err) {
+		} catch (err) {
+			ReactGA.event({ category: presale ? "Christmas Sale" : "Sale", action: "Buy Failed", label: "ERROR ALERT" });
             alert("Something Went Wrong..Try Again!")
             setIsBuying(false);
         }

@@ -40,3 +40,5 @@ export const getUnit = () => {
     console.log({network, unit: networkUnits[network]});
     return networkUnits[network];
 };
+
+export const GA_TRACKING_ID = process.env.REACT_APP_GA_TRACKING_ID;
