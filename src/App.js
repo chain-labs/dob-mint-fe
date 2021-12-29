@@ -10,6 +10,7 @@ import ReactGA from 'react-ga';
 
 
 if (!window.location.hostname.includes("localhost")) {
+  console.log("Loaded");
   ReactGA.initialize(GA_TRACKING_ID);
 }
 
