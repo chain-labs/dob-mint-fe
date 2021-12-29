@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { Card, FormControl, InputGroup, Button } from "react-bootstrap";
 import Web3 from "web3";
-import { getUnit } from "../../constants";
+import { GA_TRACKING_ID, getUnit } from "../../constants";
 import ModalBox from "../ModalBox";
+import ReactGA from 'react-ga';
+
+ReactGA.initialize(GA_TRACKING_ID, { debug: true });
 
 const SaleActiveComponent = ({
 	maxPurchase,
@@ -24,6 +27,7 @@ const SaleActiveComponent = ({
     const unit = getUnit();
 
 	const handleSaleBuy = async () => {
+		ReactGA.event({ category: presale ? "Christmas Sale" : "Sale", action: "Buy", label: "Button" });
         setIsBuying(true);
         try {
             const tx = await buy(value).send({
@@ -33,7 +37,7 @@ const SaleActiveComponent = ({
             console.log(tx);
             if (tx?.transactionHash) {
                 setIsBuying(false);
-                setShowModal(true);
+				setShowModal(true);
             } else {
                 setIsBuying(false)
                 alert("Something Went Wrong..Try Again!")

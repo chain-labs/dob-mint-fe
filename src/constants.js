@@ -40,3 +40,5 @@ export const getUnit = () => {
     console.log({network, unit: networkUnits[network]});
     return networkUnits[network];
 };
+
+export const GA_TRACKING_ID = "UA-216039877-1";
