@@ -6,7 +6,7 @@ import ReactGA from 'react-ga';
 import { GA_TRACKING_ID } from "../constants";
 
 if (window.location.hostname.includes("localhost")) {
-	ReactGA.initialize(GA_TRACKING_ID, {debug: true});
+	ReactGA.initialize(GA_TRACKING_ID);
 }
 
 // states for buying

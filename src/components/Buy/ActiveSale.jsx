@@ -5,8 +5,8 @@ import { GA_TRACKING_ID, getUnit } from "../../constants";
 import ModalBox from "../ModalBox";
 import ReactGA from 'react-ga';
 
-if (!window.location.hostname.includes("localhost")) {
-	ReactGA.initialize(GA_TRACKING_ID, {debug: true});
+if (window.location.hostname.includes("localhost")) {
+	ReactGA.initialize(GA_TRACKING_ID);
 }
 
 const SaleActiveComponent = ({
