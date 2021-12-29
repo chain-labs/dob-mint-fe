@@ -6,13 +6,10 @@ import Collection from "./entity/Collection";
 import Loading from "./containers/Loading";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { checkNetwork, GA_TRACKING_ID } from "./constants";
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 
+ReactGA.initialize(GA_TRACKING_ID);
 
-if (!window.location.hostname.includes("localhost")) {
-  console.log("Loaded");
-  ReactGA.initialize(GA_TRACKING_ID);
-}
 
 
 class App extends Component {
@@ -31,7 +28,11 @@ class App extends Component {
 
 
   componentDidMount = async () => {
-    ReactGA.pageview("Loading...");
+    // if (!window.location.hostname.includes("localhost")) {
+    if (true) {
+      ReactGA.initialize(GA_TRACKING_ID);
+    }
+    ReactGA.send({ hitType: "pageview", page: "/loading" });
     const { network, collectionAddress } = this.getEnvVar();
     try {
       this.web3 = await getWeb3();

@@ -2,12 +2,9 @@ import { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import WaitingComponent from "./Buy/WaitingComponent";
 import SaleActiveComponent from "./Buy/ActiveSale";
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import { GA_TRACKING_ID } from "../constants";
 
-if (!window.location.hostname.includes("localhost")) {
-	ReactGA.initialize(GA_TRACKING_ID);
-}
 
 // states for buying
 export const WaitingForPresale = Symbol("waiting for presale");
@@ -46,7 +43,9 @@ const Buy = ({ collection }) => {
 	const [expiryTimestamp, setExpiryTimestamp] = useState(Date.now());
 
 	useEffect(() => {
-		ReactGA.pageview("MINT_PAGE");
+		ReactGA.initialize(GA_TRACKING_ID);
+		ReactGA.send({ hitType: "pageview", page: "/minting" });
+		
 	}, [])
   
   

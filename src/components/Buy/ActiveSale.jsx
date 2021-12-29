@@ -1,13 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, FormControl, InputGroup, Button } from "react-bootstrap";
 import Web3 from "web3";
 import { GA_TRACKING_ID, getUnit } from "../../constants";
 import ModalBox from "../ModalBox";
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 
-if (!window.location.hostname.includes("localhost")) {
-	ReactGA.initialize(GA_TRACKING_ID);
-}
+
 
 const SaleActiveComponent = ({
 	maxPurchase,
@@ -19,6 +17,10 @@ const SaleActiveComponent = ({
 	const [value, setValue] = useState(1);
 	const [isBuying, setIsBuying] = useState(false);
 	const [showModal, setShowModal] = useState(false);
+
+	useEffect(() => {
+		ReactGA.initialize(GA_TRACKING_ID);
+	}, []);
 
 	const handpleInputChange = (e) => {
 		setValue(e.target.value);
