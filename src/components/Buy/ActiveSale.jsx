@@ -31,7 +31,7 @@ const SaleActiveComponent = ({
     const unit = getUnit();
 
 	const handleSaleBuy = async () => {
-		ReactGA.event({ category: presale ? "Christmas Sale" : "Sale", action: "Buy", label: "Button Click" });
+		ReactGA.event({ category: presale ? "Presale" : "Sale", action: "Buy", label: "Button Click" });
         setIsBuying(true);
         try {
             const tx = await buy(value).send({
@@ -45,10 +45,10 @@ const SaleActiveComponent = ({
 			} else {
 				setIsBuying(false)
                 alert("Something Went Wrong..Try Again!")
-				ReactGA.event({ category: presale ? "Christmas Sale" : "Sale", action: "Buy Failed", label: "ERROR ALERT" });
+				ReactGA.event({ category: presale ? "Presale" : "Sale", action: "Buy Failed", label: "ERROR ALERT" });
             }
 		} catch (err) {
-			ReactGA.event({ category: presale ? "Christmas Sale" : "Sale", action: "Buy Failed", label: "ERROR ALERT" });
+			ReactGA.event({ category: presale ? "Presale" : "Sale", action: "Buy Failed", label: "ERROR ALERT" });
             alert("Something Went Wrong..Try Again!")
             setIsBuying(false);
         }
@@ -68,7 +68,7 @@ const SaleActiveComponent = ({
 				}}
 			>
 				<Card.Body>
-					<Card.Title>Mint a Daughter of Blockchain {presale ? "(Christmas Sale)" : ""}</Card.Title>
+					<Card.Title>Mint a Daughter of Blockchain</Card.Title>
 					<hr />
 					<Card.Text>
 						<div style={{ display: "flex", justifyContent: "space-between" }}>

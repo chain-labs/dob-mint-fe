@@ -9,12 +9,13 @@ const Hero = ({ collection, connectedAddress, network }) => {
 		<div className="buyContainer">
 			<Nav connectedAddress={connectedAddress} network={network} />
 			<div className="mainSection">
-				<img className="mainImg" src={Img} alt="no"/>
+				<img className="mainImg mt-3" height="620px" style={{ objectFit: "contain", transform: "translateX(-60px)"}} src={Img} alt="no"/>
 				<div>
 					<img
 						style={{
-							width: "40vw",
-							marginTop: "100px",
+							width: "35vw",
+							objectFit: "contain",
+							marginTop: "50px",
 							marginBottom: "20px",
 						}}
 						src={Logo}

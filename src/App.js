@@ -94,7 +94,7 @@ class App extends Component {
     ) : (
       <Loading message={"Please select Polygon Matic as a network and connect your wallet"} />
     );
-  };
+  }; 
 }
 
 export default App;

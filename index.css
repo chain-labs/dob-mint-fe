@@ -1,0 +1,34 @@
+#navbar{
+    height: 100%;
+    font-size: 55px;
+    text-align: center;
+  }
+  @media(max-width: 550px){
+
+      .body{
+        text-align: center;
+        height: 100%;
+        width: 80px;
+  }
+  }
+  .body{
+    background-color: black;
+    color: rgb(114,152,163); 
+  }
+  #welcome-section{
+  background-image:url(https://hdwallpaperim.com/wp-content/uploads/2017/08/24/107122-bokeh-calm-water-sea-night.jpg);
+    height: 100%;
+    color: purple;
+    text-align: center;
+  }
+  h1 {font-size: 35px;}
+  p{font-size: 20px;}
+  #project{
+    height: 100%;
+  }
+  .project-title{
+    font-size: 55px;
+  }
+  a{
+    font-size: 40px;
+  }
