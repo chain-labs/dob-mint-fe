@@ -87,18 +87,13 @@ class App extends Component {
 
   render = () => {
     const { collection, connectedAddress, network, isLoading } = this.state;
-    // return !isLoading ? (
-    //   <div className="App">
-    //     <Hero collection={collection} connectedAddress={connectedAddress} network={network} />
-    //   </div>
-    // ) : (
-    //   <Loading message={"Please select Polygon Matic as a network and connect your wallet"} />
-    // );
-    return (
+    return !isLoading ? (
       <div className="App">
         <Hero collection={collection} connectedAddress={connectedAddress} network={network} />
       </div>
-    )
+    ) : (
+      <Loading message={"Please select Polygon Matic as a network and connect your wallet"} />
+    );
   };
 }
 
