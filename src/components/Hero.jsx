@@ -9,7 +9,7 @@ const Hero = ({ collection, connectedAddress, network }) => {
 		<div className="buyContainer">
 			<Nav connectedAddress={connectedAddress} network={network} />
 			<div className="mainSection">
-				<img className="mainImg" src={Img} alt="no"/>
+				<img className="mainImg mt-3" height="620px" src={Img} alt="no"/>
 				<div>
 					<img
 						style={{
