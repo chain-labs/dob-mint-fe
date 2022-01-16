@@ -12,6 +12,7 @@ export const WaitingForSale = Symbol("waiting for sale");
 export const PresaleActive = Symbol("presale active");
 export const SaleActive = Symbol("sale active");
 export const SaleEnded = Symbol("sale ended");
+export const Paused = Symbol("paused");
 export const showModal = Symbol("true");
 
 const SaleEndedComponent = () => {
@@ -38,6 +39,30 @@ const SaleEndedComponent = () => {
 	);
 };
 
+const SalePausedComponent = () => {
+	return (
+		<Card
+			className="text-center"
+			style={{
+				backgroundColor: "transparent",
+				color: "white",
+				border: "3px solid white",
+				fontFamily: "Satoshi",
+				fontSize: "1rem",
+			}}
+		>
+			<Card.Body>
+				<Card.Title>Mint DoB</Card.Title>
+				<hr />
+				<h1>Hi!</h1>
+				<Card.Text>
+					<div style={{ fontSize: "2rem",fontFamily:"Satoshi",color:"red" }}>Sale is Paused! Kindly check back later.</div>
+				</Card.Text>
+			</Card.Body>
+		</Card>
+	);
+};
+
 const Buy = ({ collection }) => {
   const [state, setState] = useState();
 	const [expiryTimestamp, setExpiryTimestamp] = useState(Date.now());
@@ -50,26 +75,28 @@ const Buy = ({ collection }) => {
   
   
 	useEffect(() => {
-    const figureOutState = () => {
-      if (collection?.isPresaleAllowed) {
-        if (toJSTimestamp(collection?.presaleStartTime) > Date.now()) {
-          setState(WaitingForPresale);
-          return;
-        } else if (collection?.isPresaleActive) {
-          setState(PresaleActive);
-          return;
-        }
-      }
-      if (toJSTimestamp(collection?.publicSaleStartTime) > Date.now()) {
-        setState(WaitingForSale);
-        return;
-      } else if (collection?.isSaleActive) {
-        setState(SaleActive);
-        return;
-      }
+		const figureOutState = () => {
+			if (collection?.paused) {
+				setState(Paused);
+				return;
+			}
+      		if (collection?.isPresaleAllowed) {
+        	if (toJSTimestamp(collection?.presaleStartTime) > Date.now()) {
+          		setState(WaitingForPresale);
+          		return;
+        	} else if (collection?.isPresaleActive) {
+          		setState(PresaleActive);
+          		return;
+			}
+		}
+      	if (toJSTimestamp(collection?.publicSaleStartTime) > Date.now()) {
+        	setState(WaitingForSale);
+        	return;
+      	} else if (collection?.isSaleActive) {
+        	setState(SaleActive);
+        	return;
+      	}
 		setState(SaleEnded);
-		
-		
     };
 	figureOutState();
 	}, [collection]);
@@ -139,6 +166,10 @@ const Buy = ({ collection }) => {
 		}
 		if (state === SaleEnded) {
 			return <SaleEndedComponent />;
+		}
+
+		if (state === Paused) {
+			return <SalePausedComponent />;
 		}
 	};
 	return state ? renderAccordingToState(state) : <div>Loading...</div>;
